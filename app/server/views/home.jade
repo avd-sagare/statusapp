@@ -1,0 +1,39 @@
+
+extends layout
+
+block content
+	div.navbar.navbar-fixed-top
+		div.navbar-inner
+			div.container-fluid
+				button#btn-settings.btn.btn-primary
+					i.icon-lock.icon-white
+					| Settings
+				button#btn-report.btn.btn-primary
+					i.icon-lock.icon-white
+					| Weekly Report
+				button#btn-monthly-report.btn.btn-primary
+					i.icon-lock.icon-white
+					| Monthly Report
+				button#btn-user-report.btn.btn-primary
+					i.icon-lock.icon-white
+					| User Report
+				button#btn-tag-report.btn.btn-primary
+					i.icon-lock.icon-white
+					| Topic Search
+				button#btn-logout.btn.btn-primary
+					i.icon-lock.icon-white
+					| Sign Out
+	include status
+	include getstatus
+	include modals/edit-status
+block scripts
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/js/views/home.js')
+	script(src='/js/controllers/homeController.js')
+	script(src='/js/form-validators/accountValidator.js')
+	script(src='/js/views/status.js')	
+	script(src='/socket.io/socket.io.js')
+	script(src='/js/views/sockmessage.js')	

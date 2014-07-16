@@ -1,0 +1,51 @@
+
+extends layout
+
+block content
+	div.navbar.navbar-fixed-top
+		div.navbar-inner
+			div.container-fluid
+				button#btn-settings.btn.btn-primary
+					i.icon-lock.icon-white
+					| Settings
+				button#btn-home.btn.btn-primary
+					i.icon-lock.icon-white
+					| Home
+				button#btn-report.btn.btn-primary
+					i.icon-lock.icon-white
+					| Weekly Report
+				button#btn-monthly-report.btn.btn-primary
+					i.icon-lock.icon-white
+					| Monthly Report
+				button#btn-tag-report.btn.btn-primary
+					i.icon-lock.icon-white
+					| Topic Search
+				button#btn-logout.btn.btn-primary
+					i.icon-lock.icon-white
+					| Sign Out
+	div.user-report
+		div.rptheaders
+			h1  #{userName} #{reportName}
+			span  Month- #{month}
+		div.rptdata
+			each item in results
+				ul
+					div.lstheader #{item.user}
+					each val in item.status
+						li #{val}
+		div.rptfooter
+			a(href='#{prev}', class="btn btn-primary",id="prev") Previous
+			a(href='#{next}', class="btn btn-primary",id="next") Next
+
+		
+block scripts
+	script(src='/vendor/jquery.min.js')
+	script(src='/vendor/jquery.form.js')
+	script(src='/vendor/bootstrap-modal.js')
+	script(src='/vendor/bootstrap-transition.js')
+	script(src='/js/views/home.js')
+	script(src='/js/controllers/homeController.js')
+	script(src='/js/form-validators/accountValidator.js')
+	script(src='/socket.io/socket.io.js')
+
+	

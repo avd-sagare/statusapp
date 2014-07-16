@@ -1,0 +1,19 @@
+//script(type='text/javascript')
+//	alert("reports")
+
+div.user-report
+	div.rptheaders
+		h1 Platform i18n - Week #{week}
+		span #{startWeek} to #{endWeek}
+	div.rptdata
+		each item in reports
+			ul
+				div.lstheader #{item.user}
+				each val in item.status
+					li #{val}
+	div.rptfooter
+		a(href='/report/previous/#{previous}', class="btn btn-primary",id="prev") Previous
+		a(href='/report/next/#{next}', class="btn btn-primary",id="next") Next
+
+	
+	

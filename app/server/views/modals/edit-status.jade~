@@ -1,0 +1,16 @@
+
+#modal-edit-status.modal-single-input.modal.hide.fade
+    div.modal-header
+        button.close(data-dismiss='modal') x
+        h3 Edit Status
+    div.modal-body
+        form( method="post")#edit-status-form.well.span5
+            p(id='hidden_id',hidden) 
+            //p(id='hidden_id',hidden) 
+            textarea(name="edit-stat", id='edit-stat').span5.required
+            button(type="submit")#submit.btn.btn-primary Submit
+            button()#cancel.btn Cancel
+            div.alert.alert-error.hide
+            //button(data-dismiss="alert").close
+            button().close
+    div.modal-footer
