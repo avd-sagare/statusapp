@@ -74,8 +74,11 @@ userView = function(json){
             user[json[i].user] = [ json[i].status ];   
 	}
     }
+    var keys = Object.keys(user);
+    keys.sort();
     var send_obj = [];
-    for (var key in user) {
+    for (var i=0;i<keys.length;i++) {
+	var key = keys[i];
 	var temp_object={};
 	temp_object['user']= key;
 	temp_object['status']= user[key];

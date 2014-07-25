@@ -44,25 +44,7 @@ exports.weekReport = function(req,res)
 
 };
 
-// This function does nothing but format's json object in user and its status format
-userView = function(json){
-    var user = {};
-    for (var i =0;i< json.length;i++){ 
-	if (json[i].user in user){
-            user[json[i].user].push(json[i].status);        
-	}else{
-            user[json[i].user] = [ json[i].status ];   
-	}
-    }
-    var send_obj = [];
-    for (var key in user) {
-	var temp_object={};
-	temp_object['user']= key;
-	temp_object['status']= user[key];
-	send_obj.push(temp_object);
-    }
-    return send_obj;
-};
+
 
 dateCompare = function(startDate,endDate,dates)
 {
