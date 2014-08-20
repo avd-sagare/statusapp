@@ -59,6 +59,7 @@ dateCompare = function(startDate,endDate,dates)
 		
 	    ).format("MMMM Do YYYY")
 	);
+
 	new Date(tempDate.setDate(startDate.getDate()-i));
     };
     
