@@ -3,6 +3,7 @@ var mongoose            = require('mongoose');
 var db                  = DB.getConnection();
 var moment 		= require('moment');
 var status              = db.collection('post_status');
+var CD                  = require('./common-date-functs');
 
 getWeekReport = function(days,callback)
 {
@@ -33,8 +34,8 @@ exports.weekReport = function(req,res)
 	    var rst = dateCompare(days.firstday,days.lastday,rest);
 	    res.render('report', { 
 		reports: rst,
-		next:days.lastday,
-		previous:days.firstday,
+		next:week+1+"/"+days.firstday.getFullYear(),
+		previous:week-1+"/"+days.firstday.getFullYear(),
 		week:week,
 		startWeek:moment(days.firstday).format("MMMM Do YYYY"),
 		endWeek:moment(days.lastday).format("MMMM Do YYYY")
@@ -42,6 +43,12 @@ exports.weekReport = function(req,res)
 	}
     );
 
+};
+
+
+exports.weekReports = function(req,res,weekNo,year)
+{
+    genericWeekReport(req,res,CD.getDateOfWeek(weekNo,year));
 };
 
 
@@ -72,7 +79,7 @@ dateCompare = function(startDate,endDate,dates)
     };
     
     weekResults = userView(weekResults);
-    //console.log(weekResults);
+
     return weekResults;
 };
 
@@ -136,27 +143,7 @@ getStartOfWeek = function(curr){
     return tempDate;
 };
 
-exports.previousWeekReport = function(req,res,day)
-{
-    var startDate = getStartOfWeek(new Date(day));
-    var endDate = new Date(day);
-    var days; // Not need at this point of time
-    var week = getWeek(startDate);
-    getWeekReport(
-	days,
-	function(e,rest){
-	    var rst = dateCompare(startDate,endDate,rest);
-	    res.render('report', {  
-		reports: rst,
-		next:endDate,
-		previous:startDate,
-		week:week,
-		startWeek:moment(startDate).format("MMMM Do YYYY"),
-		endWeek:moment(endDate).format("MMMM Do YYYY")
-	    });
-	}
-    );
-};
+
 
 getEndOfWeek = function(curr){
     var tempDate=curr;
@@ -164,24 +151,83 @@ getEndOfWeek = function(curr){
     return tempDate;
 };
 
-exports.nextWeekReport = function(req,res,day)
+genericWeekReport = function(req,res,day)
 {
     var endDate = getEndOfWeek(new Date(day));
     var startDate = new Date(day);
     var days; // Not need at this point of time
     var week = getWeek(startDate);
+    //var week = startDate.getWeek();
+    var nextYear = startDate.getFullYear();
+    var prevYear = endDate.getFullYear();
+    if (nextYear == 2016){
+	week = startDate.getWeek();
+    };
+    if (week == 53){
+	week = 1;
+	nextYear = nextYear+1;
+    };
+    
+    if ( week == 1){
+	if (prevYear!= nextYear){
+	    nextYear = nextYear+1;
+	}
+    }
+    var prevWeekNo = week-1;
+    var nextWeekNo = week+1;
+    if (week == 52){
+	nextWeekNo = 1;
+	nextYear = nextYear+1;
+    };
+
+    if ( week == 1){
+	prevWeekNo = 52;
+	if (prevYear == nextYear){
+	    prevYear = prevYear-1;
+	}
+    }
     getWeekReport(
 	days,
 	function(e,rest){
 	    var rst = dateCompare(startDate,endDate,rest);
 	    res.render('report', {  
 		reports: rst,
-		next:endDate,
-		previous:startDate,
+		next:nextWeekNo+"/"+nextYear,
+		previous:prevWeekNo+"/"+prevYear,
 		week:week,
 		startWeek:moment(startDate).format("MMMM Do YYYY"),
 		endWeek:moment(endDate).format("MMMM Do YYYY")
 	    });
 	}
     );
+};
+
+
+
+Date.prototype.getWeek = function (dowOffset) {
+/*getWeek() was developed by Nick Baicoianu at MeanFreePath: http://www.epoch-calendar.com */
+
+    dowOffset = typeof(dowOffset) == 'int' ? dowOffset : 0; //default dowOffset to zero
+    var newYear = new Date(this.getFullYear(),0,1);
+    var day = newYear.getDay() - dowOffset; //the day of week the year begins on
+    day = (day >= 0 ? day : day + 7);
+    var daynum = Math.floor((this.getTime() - newYear.getTime() - 
+			     (this.getTimezoneOffset()-newYear.getTimezoneOffset())*60000)/86400000) + 1;
+    var weeknum;
+    //if the year starts before the middle of a week
+    if(day < 4) {
+	weeknum = Math.floor((daynum+day-1)/7) + 1;
+	if(weeknum > 52) {
+	    nYear = new Date(this.getFullYear() + 1,0,1);
+	    nday = nYear.getDay() - dowOffset;
+	    nday = nday >= 0 ? nday : nday + 7;
+	    /*if the next year starts before the middle of
+	        the week, it is week #1 of that year*/
+	    weeknum = nday < 4 ? 1 : 53;
+	    }
+	}
+    else {
+	weeknum = Math.floor((daynum+day-1)/7);
+	}
+    return weeknum;
 };

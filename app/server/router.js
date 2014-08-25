@@ -318,9 +318,11 @@ module.exports = function(app) {
 	   WK.weekReport(req,res);
        });
 
-       app.get('/report/previous/:startDay', function(req, res) {
-	   var startDay = req.params.startDay;
-	   WK.previousWeekReport(req,res,startDay);
+       app.get('/week/:weekNumber/:year', function(req, res) {
+	   var weekNo = req.params.weekNumber;
+	   var year = req.params.year;
+	   WK.weekReports(req,res,weekNo,year);
+	   //WK.previousWeekReport(req,res,startDay);
        });
 
        app.get('/report/next/:startDay', function(req, res) {
