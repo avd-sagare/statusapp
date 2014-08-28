@@ -97,7 +97,7 @@ tagSearch = function(tag,callback)
 {
     status.find(
 	{
-	    "tags":tag
+	    "status":{$regex:tag}
 	}).toArray(
 	function(e,res){
 	    if (e){
@@ -117,7 +117,7 @@ exports.getTag = function(req,res)
 
 exports.tagReport = function(req,res,tagName)
 {
-    tagSearch(tagName+":",
+    tagSearch(tagName,
 	function(err,result){
 	    var currDay = new Date();
 	    var firstDay = new Date(currDay.getFullYear(), currDay.getMonth(), 1);
@@ -141,7 +141,7 @@ exports.tagReport = function(req,res,tagName)
 
 exports.tagMonthReport = function(req,res,tagName,startDate)
 {
-    tagSearch(tagName+":",
+    tagSearch(tagName,
 	function(err,result){
 	    var currDay = new Date(startDate);
 	    var firstDay = new Date(currDay.getFullYear(), currDay.getMonth(), 1);
