@@ -23,16 +23,17 @@ block content
 		div.rptheaders
 			h1  #{userName} #{reportName}
 			span  Month- #{month}
+		div.rptfooter
+			a(href='#{prev}', class="btn btn-primary",id="prev") Previous
+			a(href='#{next}', class="btn btn-primary",id="next") Next
 		div.rptdata
 			each item in results
 				ul
 					div.lstheader #{item.user}
 					each val in item.status
 						li #{val}
-		div.rptfooter
-			a(href='#{prev}', class="btn btn-primary",id="prev") Previous
-			a(href='#{next}', class="btn btn-primary",id="next") Next
-
+			br
+			br
 		
 block scripts
 	script(src='/vendor/jquery.min.js')

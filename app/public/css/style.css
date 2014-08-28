@@ -247,9 +247,9 @@ button i {
   color: #fd8008;
 }
 .user-report .rptfooter {
-  margin-top: 50px;
+  margin-top: 0px;
   display: inline-block;
-  padding: 30px;
+  padding: 30 30 0 30;
 }
 .user-report .rptfooter #prev {
   float: left;

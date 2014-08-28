@@ -5,15 +5,18 @@ div.user-report
 	div.rptheaders
 		h1 Platform i18n - Week #{week}
 		span #{startWeek} to #{endWeek}
+		
+	div.rptfooter
+		a(href='/week/#{previous}', class="btn btn-primary",id="prev") Previous
+		a(href='/week/#{next}', class="btn btn-primary",id="next") Next
 	div.rptdata
 		each item in reports
 			ul
 				div.lstheader #{item.user}
 				each val in item.status
 					li #{val}
-	div.rptfooter
-		a(href='/week/#{previous}', class="btn btn-primary",id="prev") Previous
-		a(href='/week/#{next}', class="btn btn-primary",id="next") Next
-
+				br
+				br
+	
 	
 	
