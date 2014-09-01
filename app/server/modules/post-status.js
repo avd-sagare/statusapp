@@ -23,7 +23,7 @@ exports.insertStatus = function(newData,callback)
     }else{
 	newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
     }
-    newData.tags = get_tags(newData.status);
+    newData.tags = get_tags(newData.status.trim());
     if ( newData.tags == null){
 	// No tags have been defined, insert default :misc tag
 	newData.status = "misc: "+ newData.status;
