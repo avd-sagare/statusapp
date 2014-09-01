@@ -24,11 +24,21 @@ exports.insertStatus = function(newData,callback)
 	newData.date = moment().format('MMMM Do YYYY, h:mm:ss a');
     }
     newData.tags = get_tags(newData.status);
+    if ( newData.tags == null){
+	// No tags have been defined, insert default :misc tag
+	newData.status = "misc: "+ newData.status;
+	newData.tags = ['misc:'];
+    }
     status.insert(newData, {safe: true}, callback);
  };
 
 
 get_tags = function(status){
-    return status.match(/\w+:/g)
+    var topic = status.split(" ")[0];
+    if( topic.substr(topic.length - 1) == ":"){
+	return [topic];
+    }
+    return null;
+    //return status.match(/\w+:/g)
 };
 
