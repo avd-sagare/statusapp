@@ -190,7 +190,7 @@ exports.monthReport = function(req,res,tagName)
 	    var prevDayMonth = getPrevMonth(firstDay);
 	    var month = CD.getMonth(currDay.getMonth());
 	    res.render('user-report',{
-		"userName":"Platform i18n - Monthly Summary!!",
+		"userName":"Platform i18n - Monthly Summary",
 		"results":rst,
 		"month":month,
 		"prev":"/monthreport"+"/previous/"+prevDayMonth,
@@ -214,11 +214,61 @@ exports.generalMonthReport = function(req,res,startDate)
 	    var prevDayMonth = getPrevMonth(firstDay);
 	    var month = CD.getMonth(currDay.getMonth());
 	    res.render('user-report',{
-		"userName":"Platform i18n - Monthly Summary!!",
+		"userName":"Platform i18n - Monthly Summary",
 		"results":rst,
 		"month":month,
 		"prev":"/monthreport"+"/previous/"+prevDayMonth,
 		"next":"/monthreport"+"/next/"+nextDayMonth,
+		"reportName":"",
+	    });
+	}
+    );
+    
+};
+
+
+
+exports.topicReport = function(req,res)
+{
+    getAllReport(
+	function(err,result){
+	    var currDay = new Date();
+	    var firstDay = new Date(currDay.getFullYear(), currDay.getMonth(), 1);
+	    var rst= CD.topicFilter(firstDay,result);
+	    var nextDayMonth = getNextMonth(firstDay);
+	    var prevDayMonth = getPrevMonth(firstDay);
+	    var month = CD.getMonth(currDay.getMonth());
+	    res.render('topic-report',{
+		"userName":"Platform i18n - Monthly Summary",
+		"results":rst,
+		"month":month,
+		"prev":"/topicreport"+"/previous/"+prevDayMonth,
+		"next":"/topicreport"+"/next/"+nextDayMonth,
+		"reportName":""
+	    });
+	}
+    );
+    
+};
+
+
+
+exports.generalTopicReport = function(req,res,startDate)
+{
+    getAllReport(
+	function(err,result){
+	    var currDay = new Date(startDate);
+	    var firstDay = new Date(currDay.getFullYear(), currDay.getMonth(), 1);
+	    var rst= CD.topicFilter(firstDay,result);
+	    var nextDayMonth = getNextMonth(firstDay);
+	    var prevDayMonth = getPrevMonth(firstDay);
+	    var month = CD.getMonth(currDay.getMonth());
+	    res.render('topic-report',{
+		"userName":"Platform i18n - Monthly Summary",
+		"results":rst,
+		"month":month,
+		"prev":"/topicreport"+"/previous/"+prevDayMonth,
+		"next":"/topicreport"+"/next/"+nextDayMonth,
 		"reportName":"",
 	    });
 	}

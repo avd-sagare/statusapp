@@ -378,6 +378,19 @@ module.exports = function(app) {
        app.get('/monthreport/next/:startMonth', function(req, res) {
 	   UR.generalMonthReport(req,res,req.params.startMonth);
        });
+
+
+       app.get('/topicreport', function(req, res) {
+	   UR.topicReport(req,res);
+       });
+
+       app.get('/topicreport/previous/:startMonth', function(req, res) {
+	   UR.generalTopicReport(req,res,req.params.startMonth);
+       });
+
+       app.get('/topicreport/next/:startMonth', function(req, res) {
+	   UR.generalTopicReport(req,res,req.params.startMonth);
+       });
        app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 
 };

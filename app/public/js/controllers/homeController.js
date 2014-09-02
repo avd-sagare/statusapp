@@ -14,6 +14,8 @@ function HomeController()
         $('#btn-tag-report').click(function(){ that.attemptTagReport(); });
 
         $('#btn-monthly-report').click(function(){ that.attemptMonthReport(); });
+
+        $('#btn-topic-report').click(function(){ that.attemptTopicReport(); });
     
 // Account settings
         $('#btn-settings').click(function(){ that.attemptSettings(); });
@@ -47,6 +49,11 @@ function HomeController()
         this.attemptTagReport = function()
         {
             window.location.href = '/tag';
+        };
+
+       this.attemptTopicReport = function()
+        {
+            window.location.href = '/topicreport';
         };
         
         this.attemptMonthReport = function()

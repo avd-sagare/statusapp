@@ -21,12 +21,22 @@ block content
 					| Topic Report
 				button#btn-logout.btn.btn-primary
 					| Sign Out
-	div.get-user
-		form( method="post")#post-user-form.well.span4
-			label User Name
-			input(type="text", name="post-user", id='post-user-txt').span4.required
-			button(type="submit")#btn-postuser.btn.btn-primary
-				| Submit
+	div.user-report
+		div.rptheaders
+			h1  #{userName} #{reportName}
+			span  Month- #{month}
+		div.rptfooter
+			a(href='#{prev}', class="btn btn-primary",id="prev") Previous
+			a(href='#{next}', class="btn btn-primary",id="next") Next
+		div.rptdata
+			each item in results
+				ul
+					div.lstheader #{item.topic}
+					each val in item.posts
+						li #{val.post}  &nbsp &nbsp [#{val.user}]
+			br
+			br
+		
 block scripts
 	script(src='/vendor/jquery.min.js')
 	script(src='/vendor/jquery.form.js')
@@ -36,5 +46,5 @@ block scripts
 	script(src='/js/controllers/homeController.js')
 	script(src='/js/form-validators/accountValidator.js')
 	script(src='/socket.io/socket.io.js')
-	script(src='/js/views/post-user.js')
+
 	
