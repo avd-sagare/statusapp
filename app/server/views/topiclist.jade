@@ -7,6 +7,8 @@ block content
 			div.container-fluid
 				button#btn-settings.btn.btn-primary
 					| Settings
+				button#btn-home.btn.btn-primary
+					| Home
 				button#btn-report.btn.btn-primary
 					| Weekly Report
 				button#btn-monthly-report.btn.btn-primary
@@ -17,13 +19,23 @@ block content
 					| Search
 				button#btn-topic-report.btn.btn-primary
 					| Topic Report
-				button#btn-topic-suggest.btn.btn-primary
-					| Topic Suggestions
 				button#btn-logout.btn.btn-primary
 					| Sign Out
-	include status
-	include getstatus
-	include modals/edit-status
+	br 
+	br
+	div.container(style='margin:20px')
+		table.table.table-bordered.table-striped
+			thead
+				tr
+					th(style='width:40px') #
+					th(style='width:180px') Name
+			tbody
+			- for (var i = 0; i < tps.length; i++)
+				tr
+					td= i+1
+					td= tps[i].name
+	include modals/alert
+	include modals/confirm
 
 block scripts
 	script(src='/vendor/jquery.min.js')
@@ -33,6 +45,3 @@ block scripts
 	script(src='/js/views/home.js')
 	script(src='/js/controllers/homeController.js')
 	script(src='/js/form-validators/accountValidator.js')
-	script(src='/js/views/status.js')	
-	script(src='/socket.io/socket.io.js')
-	script(src='/js/views/sockmessage.js')	

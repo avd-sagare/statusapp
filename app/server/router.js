@@ -7,7 +7,7 @@ var GS = require('./modules/get-status');
 var SI = require('./sk.io');
 var WK = require('./modules/report-manager')
 var UR = require('./modules/user-report-manager');
-
+var TM = require('./modules/topic-manager');
 
 
 module.exports = function(app) {
@@ -391,6 +391,12 @@ module.exports = function(app) {
        app.get('/topicreport/next/:startMonth', function(req, res) {
 	   UR.generalTopicReport(req,res,req.params.startMonth);
        });
-       app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
+    
+      app.get('/topiclist', function(req, res) {
+	  TM.getAllRecords( function(e, topics){
+	      res.render('topiclist', { title : 'Topic List', tps : topics });
+	  })
+      });
+      app.get('*', function(req, res) { res.render('404', { title: 'Page Not Found'}); });
 
 };
