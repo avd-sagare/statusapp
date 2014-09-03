@@ -25,7 +25,9 @@ getAllStatus = function(callback)
 	status.find().sort({_id:-1}).toArray(
 		function(e, res) {
 		if (e) callback(e)
-		else callback(null, res)
+		else{
+		    callback(null, res.slice(0,50))
+		}
 	});
 };
 
