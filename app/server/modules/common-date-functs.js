@@ -132,9 +132,12 @@ exports.topicFilter = function(startDate,results)
 };
 
 removeTopics = function(json){
+
     for (var i =0;i< json.length;i++){
-	for ( var j=0; j< json[i].tags.length;j++){
-	    json[i].status=json[i].status.replace(json[i].tags[j],"");
+	if ( json[i].tags != null){
+	    for ( var j=0; j< json[i].tags.length;j++){
+		json[i].status=json[i].status.replace(json[i].tags[j],"");
+	    }
 	}
     }
     return json;
@@ -143,15 +146,17 @@ removeTopics = function(json){
 topicView = function(json){
     var topic = {};
     for (var i =0;i< json.length;i++){
-	for ( var j=0; j< json[i].tags.length;j++){
-	    if (json[i].tags[j] in topic){
-		var tmp_obj = {"status":json[i].status,"user":json[i].user};
-		topic[json[i].tags[j]].push(tmp_obj);        
-	    }else{
-		var tmp_obj = {"status":json[i].status,"user":json[i].user };
-		topic[json[i].tags[j]] = [ tmp_obj];   
+	if ( json[i].tags != null){
+	    for ( var j=0; j< json[i].tags.length;j++){
+		if (json[i].tags[j] in topic){
+		    var tmp_obj = {"status":json[i].status,"user":json[i].user};
+		    topic[json[i].tags[j]].push(tmp_obj);        
+		}else{
+		    var tmp_obj = {"status":json[i].status,"user":json[i].user };
+		    topic[json[i].tags[j]] = [ tmp_obj];   
+		}
 	    }
-	}
+       }
     }
     var keys = Object.keys(topic);
     keys.sort();
