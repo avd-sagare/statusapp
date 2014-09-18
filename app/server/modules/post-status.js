@@ -4,7 +4,7 @@ var db                  = DB.getConnection();
 var moment 		= require('moment');
 
 var status              = db.collection('post_status');
-
+var mongoose            = require('mongoose');
 
 is_valid_date = function(d) {
   if ( Object.prototype.toString.call(d) !== "[object Date]" )
@@ -30,6 +30,48 @@ exports.insertStatus = function(newData,callback)
 	newData.tags = ['misc:'];
     }
     status.insert(newData, {safe: true}, callback);
+ };
+
+
+
+exports.updateStatus = function(newData,callback)
+{
+    var id = new  mongoose.Types.ObjectId(newData.id);
+    newData.status = newData.status.trim();
+    var curr_date = newData.status.split(" ")[0];
+    var d = new Date(curr_date);
+    if(is_valid_date(d)){
+	newData.status = newData.status.replace(curr_date,"");
+	newData.date = moment(curr_date).format('MMMM Do YYYY, h:mm:ss a');
+	status.update(
+	    {_id:id},
+	    {
+		$set:{date:newData.date}
+	    },
+	    callback
+	);
+    }
+    newData.tags = get_tags(newData.status.trim());
+    if ( newData.tags == null){
+	// No tags have been defined, insert default :misc tag
+	newData.status = "misc: "+ newData.status;
+	newData.tags = ['misc:'];
+	status.update(
+	    {_id:id},
+	    {
+		$set:{tags:newData.tags} 
+	    },
+	    callback
+	);
+    }
+    status.update(
+	{_id:id},
+	{
+	    $set:{ status:newData.status}
+	},
+	callback
+    );
+    //status.insert(newData, {safe: true}, callback);
  };
 
 

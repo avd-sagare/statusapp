@@ -274,8 +274,9 @@ module.exports = function(app) {
 	        res.redirect('/');
 	    }   else{
 		// FIXME instead of directly editing the status,delete it and then insert it
-                GS.deleteStatus(req.param('id'));
-		PS.insertStatus({
+                //GS.deleteStatus(req.param('id'));
+		PS.updateStatus({
+		    id          : req.param('id'),
 		    uid         : req.session.user._id,
 		    user 	: req.session.user.user,
 		    status 	: req.param('edit-stat')
