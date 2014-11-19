@@ -23,6 +23,7 @@
 		"moment" : "1.7.2",
 		"emailjs": "0.3.3",
 	        "socket.io" : "0.9.x",
+	        "irc":"",
 	        "mongoose":""
 	},
 	"engines": {

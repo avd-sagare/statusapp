@@ -5,6 +5,7 @@ var moment 		= require('moment');
 
 var status              = db.collection('post_status');
 var mongoose            = require('mongoose');
+var accounts            = db.collection('accounts');
 
 is_valid_date = function(d) {
   if ( Object.prototype.toString.call(d) !== "[object Date]" )
@@ -84,3 +85,13 @@ get_tags = function(status){
     //return status.match(/\w+:/g)
 };
 
+exports.getUid = function(user,callback)
+{
+    accounts.findOne({user:user}, function(e, o) {
+	if (o){
+	    callback(o._id);
+	}else{
+	    callback(null);
+	}
+    });
+}
