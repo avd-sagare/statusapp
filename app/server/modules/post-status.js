@@ -43,6 +43,7 @@ exports.updateStatus = function(newData,callback)
     var d = new Date(curr_date);
     if(is_valid_date(d)){
 	newData.status = newData.status.replace(curr_date,"");
+	newData.status = newData.status.trim();
 	newData.date = moment(curr_date).format('MMMM Do YYYY, h:mm:ss a');
 	status.update(
 	    {_id:id},
