@@ -24,7 +24,6 @@
 		"emailjs": "0.3.3",
 	        "socket.io" : "0.9.x",
 	        "mongoose":"",
-                "irc": ""
 	},
 	"engines": {
 		"node": "0.8.14",
